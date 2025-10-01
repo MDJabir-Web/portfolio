@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beast Couple Portfolio</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2d1b69 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, rgba(147, 51, 234, 0.4) 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        /* Glassmorphism Base */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Split Screen Landing */
+        .landing {
+            height: 100vh;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .partner-side {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .partner-side:hover {
+            flex: 1.2;
+        }
+
+        .partner-left {
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.3) 0%, rgba(147, 51, 234, 0.2) 100%);
+        }
+
+        .partner-right {
+            background: linear-gradient(45deg, rgba(147, 51, 234, 0.2) 0%, rgba(236, 72, 153, 0.3) 100%);
+        }
+
+        .partner-content {
+            text-align: center;
+            z-index: 2;
+            animation: heartbeat 3s ease-in-out infinite;
+        }
+
+        .partner-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(147, 51, 234, 0.4));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin: 0 auto 2rem;
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .partner-avatar:hover {
+            transform: scale(1.1);
+        }
+
+        .partner-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .partner-title {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+        }
+
+        .explore-btn {
+            padding: 1rem 2rem;
+            background: rgba(59, 130, 246, 0.2);
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .explore-btn:hover {
+            background: rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 5rem 2rem;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .timeline {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 4rem;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .polaroid {
+            width: 300px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 0 2rem;
+            transform: rotate(-2deg);
+            transition: all 0.5s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .polaroid-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(147, 51, 234, 0.3));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .polaroid-caption {
+            color: white;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .timeline-content {
+            flex: 1;
+            color: white;
+        }
+
+        .timeline-date {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: rgba(59, 130, 246, 1);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 5rem 2rem;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .gallery-item:hover::before {
+            left: 100%;
+        }
+
+        /* Secret Room */
+        .secret-room {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .secret-content {
+            text-align: center;
+            color: white;
+            max-width: 600px;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .close-secret {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Heart Particles */
+        .heart-particle {
+            position: fixed;
+            color: rgba(236, 72, 153, 0.8);
+            font-size: 1rem;
+            pointer-events: none;
+            z-index: 1000;
+            animation: floatUp 3s ease-out forwards;
+        }
+
+        /* Animations */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        /* Project and Music Card Hover Effects */
+        .project-card:hover, .music-card:hover, .quote-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+
+        .project-card:hover {
+            border-color: rgba(236, 72, 153, 0.6);
+        }
+
+        /* Gallery Photo Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gallery-photo:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-photo:hover .photo-overlay {
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .landing {
+                flex-direction: column;
+            }
+            
+            .partner-side:hover {
+                flex: 1;
+            }
+            
+            .timeline-item {
+                flex-direction: column !important;
+            }
+            
+            .polaroid {
+                margin: 1rem 0;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Landing Section -->
+    <section class="landing">
+        <div class="partner-side partner-left" onclick="explorePartner('alex')">
+            <div class="partner-content">
+                <div class="partner-avatar">👨‍💻</div>
+                <h2 class="partner-name">Zabir</h2>
+                <p class="partner-title">Innocent Hobby</p>
+                <button class="explore-btn">Explore My World</button>
+            </div>
+        </div>
+        <div class="partner-side partner-right" onclick="explorePartner('sam')">
+            <div class="partner-content">
+                <div class="partner-avatar">👩‍🎨</div>
+                <h2 class="partner-name">Arfi</h2>
+                <p class="partner-title">Dominating Wifey</p>
+                <button class="explore-btn">Discover My Journey</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <h2 class="section-title">Our Love Story</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="polaroid" onclick="createHeartParticles(event)">
+                    <div class="polaroid-image">💕</div>
+                    <div class="polaroid-caption">First Meeting</div>
+                </div>
+                <div class="timeline-content">
+                    <div class="timeline-date">August 25, 2025</div>
+                    <div class="timeline-description">
+                        Destiny brought us together through Instagram and mutual friends. Two hearts finding each other in the digital realm, beginning a love story that would change everything.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="polaroid" onclick="createHeartParticles(event)">
+                    <div class="polaroid-image">💌</div>
+                    <div class="polaroid-caption">First Project - Apology</div>
+                </div>
+                <div class="timeline-content">
+                    <div class="timeline-date">September 10, 2025</div>
+                    <div class="timeline-description">
+                        Our first collaboration born from the heart - an apology project that she loved. This was when we knew our creativity could heal and bring us closer together.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="polaroid" onclick="createHeartParticles(event)">
+                    <div class="polaroid-image">💍</div>
+                    <div class="polaroid-caption">The Proposal</div>
+                </div>
+                <div class="timeline-content">
+                    <div class="timeline-date">September 12, 2025</div>
+                    <div class="timeline-description">
+                        Just two days after our first project, love couldn't wait any longer. A magical moment where forever became our favorite word and our greatest adventure began.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="polaroid" onclick="createHeartParticles(event)">
+                    <div class="polaroid-image">🌟</div>
+                    <div class="polaroid-caption">First Official - "sharek32.foryou"</div>
+                </div>
+                <div class="timeline-content">
+                    <div class="timeline-date">September 18, 2025</div>
+                    <div class="timeline-description">
+                        Our first official project together - "sharek32.foryou" - a digital love letter that marked the beginning of our creative partnership and eternal bond.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Animated Gallery Section -->
+    <section class="gallery-section">
+        <h2 class="section-title">Our Memory Gallery</h2>
+        <div class="animated-gallery" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; padding: 2rem;">
+            
+            <!-- First Couple Note -->
+            <div class="gallery-photo glass" style="position: relative; overflow: hidden; cursor: pointer; animation: fadeInUp 0.8s ease-out;">
+                <img src="https://i.ibb.co.com/4g5K9zCs/Screenshot-. .png" alt="Our First Note"
+                     style="width: 100%; height: auto; display: block; border-radius: 15px; transition: transform 0.5s ease; object-fit: contain; background: #222;"
+                     onclick="openPhotoModal(this.src, '💕 Our First Note - Where our digital love story began')"
+                     onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+                <div class="photo-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; padding: 1rem; transform: translateY(100%); transition: transform 0.3s ease;">
+                    <h3 style="margin: 0; font-size: 1.1rem;">💕 Our First Note</h3>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">Where our digital love story began</p>
+                </div>
+            </div>
+
+            <!-- Matching PFP -->
+            <div class="gallery-photo glass" style="position: relative; overflow: hidden; cursor: pointer; animation: fadeInUp 0.8s ease-out 0.2s both;">
+                <img src="https://i.ibb.co.com/dswk8DcB/image-. 8.png" alt="Matching Profile Pictures"
+                     style="width: 100%; height: auto; display: block; border-radius: 15px; transition: transform 0.5s ease; object-fit: contain; background: #222;"
+                     onclick="openPhotoModal(this.src, '👫 Matching PFPs - Two hearts, one aesthetic')"
+                     onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+                <div class="photo-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; padding: 1rem; transform: translateY(100%); transition: transform 0.3s ease;">
+                    <h3 style="margin: 0; font-size: 1.1rem;">👫 Matching PFPs</h3>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">Two hearts, one aesthetic</p>
+                </div>
+            </div>
+
+            <!-- Another Matching Note -->
+            <div class="gallery-photo glass" style="position: relative; overflow: hidden; cursor: pointer; animation: fadeInUp 0.8s ease-out 0.4s both;">
+                <img src="https://i.ibb.co.com/1YDwptjp/Screenshot-. .png" alt="Another Sweet Note"
+                     style="width: 100%; height: auto; display: block; border-radius: 15px; transition: transform 0.5s ease; object-fit: contain; background: #222;"
+                     onclick="openPhotoModal(this.src, '💌 Sweet Messages - Love letters in pixels')"
+                     onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+                <div class="photo-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; padding: 1rem; transform: translateY(100%); transition: transform 0.3s ease;">
+                    <h3 style="margin: 0; font-size: 1.1rem;">💌 Sweet Messages</h3>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">Love letters in pixels</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Modal -->
+    <div id="photoModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 2rem;">
+        <div style="max-width: 90%; max-height: 90%; position: relative;">
+            <img id="modalImage" style="max-width: 100%; max-height: 100%; border-radius: 15px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+            <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.2rem;"></div>
+            <button onclick="closePhotoModal()" style="position: absolute; top: -40px; right: 0; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255,255,255,0.1);">×</button>
+        </div>
+    </div>
+
+    <!-- Projects Section -->
+    <section class="projects-section" style="padding: 5rem 2rem;">
+        <h2 class="section-title">Our Digital Love Projects</h2>
+        <div class="projects-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+            <div class="project-card glass" style="padding: 2rem; text-align: center; cursor: pointer; transition: all 0.5s ease;" onclick="window.open('https://mdjabir-web.github.io/apology/', '_blank'); createHeartParticles(event);">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">💌</div>
+                <h3 style="color: white; margin-bottom: 1rem; font-size: 1.3rem;">Apology Project</h3>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Our first heartfelt creation - where love learned to say sorry</p>
+            </div>
+            
+            <div class="project-card glass" style="padding: 2rem; text-align: center; cursor: pointer; transition: all 0.5s ease;" onclick="window.open('https://mdjabir-web.github.io/nikah-certificate/', '_blank'); createHeartParticles(event);">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">💒</div>
+                <h3 style="color: white; margin-bottom: 1rem; font-size: 1.3rem;">Nikah Certificate</h3>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">A digital promise of forever - our sacred bond</p>
+            </div>
+            
+            <div class="project-card glass" style="padding: 2rem; text-align: center; cursor: pointer; transition: all 0.5s ease;" onclick="window.open('https://mdjabir-web.github.io/wifey/', '_blank'); createHeartParticles(event);">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">👸</div>
+                <h3 style="color: white; margin-bottom: 1rem; font-size: 1.3rem;">For My Wifey</h3>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">A tribute to my queen - celebrating her beauty</p>
+            </div>
+            
+            <div class="project-card glass" style="padding: 2rem; text-align: center; cursor: pointer; transition: all 0.5s ease;" onclick="window.open('https://mdjabir-web.github.io/secret-garden/', '_blank'); createHeartParticles(event);">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🌹</div>
+                <h3 style="color: white; margin-bottom: 1rem; font-size: 1.3rem;">Secret Garden</h3>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Our hidden paradise where love blooms eternal</p>
+            </div>
+            
+            <div class="project-card glass" style="padding: 2rem; text-align: center; cursor: pointer; transition: all 0.5s ease; border: 2px solid rgba(236, 72, 153, 0.5);" onclick="window.open('https://sharek32.github.io/foryou/', '_blank'); createHeartParticles(event);">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">⭐</div>
+                <h3 style="color: white; margin-bottom: 1rem; font-size: 1.3rem;">For You (Official)</h3>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Our first official masterpiece - sharek32.foryou</p>
+            </div>
+            
+            <div class="project-card glass" style="padding: 2rem; text-align: center; cursor: pointer; transition: all 0.5s ease;" onclick="window.open('https://sharek32.github.io/space/', '_blank'); createHeartParticles(event);">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
+                <h3 style="color: white; margin-bottom: 1rem; font-size: 1.3rem;">Space Journey</h3>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Exploring the cosmos of our infinite love</p>
+            </div>
+            
+            <div class="project-card glass" style="padding: 2rem; text-align: center; cursor: pointer; transition: all 0.5s ease;" onclick="window.open('https://sharek32.github.io/garden/', '_blank'); createHeartParticles(event);">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🌺</div>
+                <h3 style="color: white; margin-bottom: 1rem; font-size: 1.3rem;">Digital Garden</h3>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Where our love grows in pixels and code</p>
+            </div>
+            
+            <div class="project-card glass" style="padding: 2rem; text-align: center; cursor: pointer; transition: all 0.5s ease;" onclick="window.open('https://sharek32.github.io/proposal/', '_blank'); createHeartParticles(event);">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">💎</div>
+                <h3 style="color: white; margin-bottom: 1rem; font-size: 1.3rem;">The Proposal</h3>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">The moment that changed everything forever</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Music Section -->
+    <section class="music-section" style="padding: 5rem 2rem; background: rgba(0, 0, 0, 0.3);">
+        <h2 class="section-title">Our Love Soundtrack</h2>
+        <div class="music-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto;">
+            <div class="music-card glass" style="padding: 1.5rem; text-align: center; cursor: pointer;" onclick="createHeartParticles(event)">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">💙</div>
+                <h4 style="color: white; margin-bottom: 0.5rem;">Blue</h4>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">by Yung Kai</p>
+            </div>
+            
+            <div class="music-card glass" style="padding: 1.5rem; text-align: center; cursor: pointer;" onclick="createHeartParticles(event)">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
+                <h4 style="color: white; margin-bottom: 0.5rem;">Until I Found You</h4>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">Our discovery song</p>
+            </div>
+            
+            <div class="music-card glass" style="padding: 1.5rem; text-align: center; cursor: pointer;" onclick="createHeartParticles(event)">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🟤</div>
+                <h4 style="color: white; margin-bottom: 0.5rem;">Golden Brown</h4>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">Warm like our love</p>
+            </div>
+            
+            <div class="music-card glass" style="padding: 1.5rem; text-align: center; cursor: pointer;" onclick="createHeartParticles(event)">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">💕</div>
+                <h4 style="color: white; margin-bottom: 0.5rem;">Love Story</h4>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">by Indila</p>
+            </div>
+            
+            <div class="music-card glass" style="padding: 1.5rem; text-align: center; cursor: pointer;" onclick="createHeartParticles(event)">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌟</div>
+                <h4 style="color: white; margin-bottom: 0.5rem;">Wanna Be Yours</h4>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">Forever and always</p>
+            </div>
+            
+            <div class="music-card glass" style="padding: 1.5rem; text-align: center; cursor: pointer;" onclick="createHeartParticles(event)">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">😊</div>
+                <h4 style="color: white; margin-bottom: 0.5rem;">Die With a Smile</h4>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">Our eternal promise</p>
+            </div>
+            
+            <div class="music-card glass" style="padding: 1.5rem; text-align: center; cursor: pointer;" onclick="createHeartParticles(event)">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">✝️</div>
+                <h4 style="color: white; margin-bottom: 0.5rem;">Marry on a Cross</h4>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">Sacred devotion</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quotes Section -->
+    <section class="quotes-section" style="padding: 5rem 2rem;">
+        <h2 class="section-title">Words of Our Hearts</h2>
+        <div class="quotes-container" style="max-width: 800px; margin: 0 auto;">
+            <div class="quote-card glass" style="padding: 2rem; margin-bottom: 2rem; text-align: center;" onclick="createHeartParticles(event)">
+                <div style="font-size: 2rem; margin-bottom: 1rem;">⚔️👸</div>
+                <p style="color: white; font-size: 1.2rem; font-style: italic; margin-bottom: 1rem;">
+                    "My lady, thou art the light that guideth mine sword through the darkest of battles, and the grace that maketh this knight's heart beat with purpose."
+                </p>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">- Knight to his Princess</p>
+            </div>
+            
+            <div class="quote-card glass" style="padding: 2rem; margin-bottom: 2rem; text-align: center;" onclick="createHeartParticles(event)">
+                <div style="font-size: 2rem; margin-bottom: 1rem;">👑❤️</div>
+                <p style="color: white; font-size: 1.2rem; font-style: italic; margin-bottom: 1rem;">
+                    "In thee, my Queen, I have found not just a crown for my kingdom, but the very soul that maketh me worthy to be called King."
+                </p>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">- King to his Queen</p>
+            </div>
+            
+            <div class="quote-card glass" style="padding: 2rem; margin-bottom: 2rem; text-align: center;" onclick="createHeartParticles(event)">
+                <div style="font-size: 2rem; margin-bottom: 1rem;">🌹✨</div>
+                <p style="color: white; font-size: 1.2rem; font-style: italic; margin-bottom: 1rem;">
+                    "Thou art my fairest rose in this garden of life, and I, thy devoted knight, shall tend to thee with all the love mine heart can hold."
+                </p>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">- A Knight's Devotion</p>
+            </div>
+            
+            <div class="quote-card glass" style="padding: 2rem; text-align: center;" onclick="createHeartParticles(event)">
+                <div style="font-size: 2rem; margin-bottom: 1rem;">💫👑</div>
+                <p style="color: white; font-size: 1.2rem; font-style: italic; margin-bottom: 1rem;">
+                    "Together we reign not over lands or gold, but over a kingdom built of dreams, laughter, and a love that shall echo through eternity."
+                </p>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">- Our Royal Promise</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Secret Room -->
+    <div class="secret-room" id="secretRoom">
+        <button class="close-secret" onclick="closeSecret()">×</button>
+        <div class="secret-content">
+            <h2 style="margin-bottom: 2rem; font-size: 2.5rem;">🎉 Secret Unlocked! 🎉</h2>
+            <p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 2rem;">
+                You found our hidden treasure! This secret room holds our most precious memories and dreams for the future.
+            </p>
+            <div style="font-size: 3rem; margin: 2rem 0;">💖✨🌟💖</div>
+            <p style="color: rgba(255, 255, 255, 0.8);">
+                "In a world full of temporary things, you are a perpetual feeling." - Sanober Khan
+            </p>
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop style="display: none;">
+        <source src="lovestory.mp4" type="audio/mp4">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Footer Section -->
+    <footer style="background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(20px); padding: 3rem 2rem 2rem; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                <div>
+                    <h3 style="color: white; margin-bottom: 1rem; font-size: 1.5rem;">💕 Zabir & Arfi</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">
+                        Two hearts, one digital love story. Creating beautiful memories through code, creativity, and endless devotion.
+                    </p>
+                </div>
+                <div>
+                    <h4 style="color: white; margin-bottom: 1rem;">Our Journey</h4>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin-bottom: 0.5rem;">💕 First Met: August 25, 2025</p>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin-bottom: 0.5rem;">💍 Engaged: September 12, 2025</p>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">⭐ First Project: September 18, 2025</p>
+                </div>
+                <div>
+                    <h4 style="color: white; margin-bottom: 1rem;">Love Stats</h4>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin-bottom: 0.5rem;">🎨 8 Digital Projects</p>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin-bottom: 0.5rem;">🎵 7 Love Songs</p>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">💖 Infinite Memories</p>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem;">
+                <p style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; margin-bottom: 1rem;">
+                    "In a world full of temporary things, you are a perpetual feeling."
+                </p>
+                <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.8rem;">
+                    Made with 💖 by Zabir & Arfi • Our Digital Love Portfolio • 2025
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Background Music
+        const bgMusic = document.getElementById('bgMusic');
+        
+        // Auto-play background music (with user interaction)
+        document.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(e => console.log('Audio play failed:', e));
+            }
+        }, { once: true });
+
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const trails = [];
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+            
+            // Create trail effect
+            if (trails.length > 10) {
+                const oldTrail = trails.shift();
+                oldTrail.remove();
+            }
+            
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = e.clientX - 2 + 'px';
+            trail.style.top = e.clientY - 2 + 'px';
+            document.body.appendChild(trail);
+            trails.push(trail);
+            
+            setTimeout(() => {
+                trail.style.opacity = '0';
+                trail.style.transform = 'scale(0)';
+            }, 100);
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Heart particles
+        function createHeartParticles(event) {
+            for (let i = 0; i < 5; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerHTML = '💖';
+                heart.style.left = (event.clientX + Math.random() * 40 - 20) + 'px';
+                heart.style.top = (event.clientY + Math.random() * 40 - 20) + 'px';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 3000);
+            }
+        }
+
+        // Partner exploration
+        function explorePartner(partner) {
+            createHeartParticles(event);
+            // Smooth scroll to timeline
+            document.querySelector('.timeline-section').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+
+
+        // Button hover effects
+        document.querySelectorAll('.explore-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transform = 'translateY(-2px) scale(1.05)';
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Photo Modal Functions
+        function openPhotoModal(imageSrc, caption) {
+            const modal = document.getElementById('photoModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            modalImage.src = imageSrc;
+            modalCaption.textContent = caption;
+            modal.style.display = 'flex';
+            
+            // Add fade in animation
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modal.style.transition = 'opacity 0.3s ease';
+            }, 10);
+        }
+
+        function closePhotoModal() {
+            const modal = document.getElementById('photoModal');
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // Close modal when clicking outside the image
+        document.getElementById('photoModal').addEventListener('click', (e) => {
+            if (e.target.id === 'photoModal') {
+                closePhotoModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closePhotoModal();
+            }
+        });
+
+        // Breathing background animation
+        let breathePhase = 0;
+        setInterval(() => {
+            breathePhase += 0.02;
+            const intensity = Math.sin(breathePhase) * 0.1 + 0.9;
+            document.body.style.filter = `brightness(${intensity})`;
+        }, 50);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'987e3999a5a57e63',t:'MTc1OTM0NTQ1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
