@@ -485,11 +485,8 @@
         <div class="animated-gallery" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; padding: 2rem;">
             
             <!-- First Couple Note -->
-            <div class="gallery-photo glass" style="position: relative; overflow: hidden; cursor: pointer; animation: fadeInUp 0.8s ease-out;">
-                <img src="https://i.ibb.co.com/4g5K9zCs/Screenshot-. .png" alt="Our First Note"
-                     style="width: 100%; height: auto; display: block; border-radius: 15px; transition: transform 0.5s ease; object-fit: contain; background: #222;"
-                     onclick="openPhotoModal(this.src, '💕 Our First Note - Where our digital love story began')"
-                     onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+            <div class="gallery-photo glass" style="position: relative; overflow: hidden; cursor: pointer; animation: fadeInUp 0.8s ease-out;" onclick="openPhotoModal('https://i.ibb.co.com/4g5K9zCs/Screenshot-. .png', 'Our First Note'); createHeartParticles(event);">
+                <img src="https://i.ibb.co.com/4g5K9zCs/Screenshot-. .png" alt="Our First Note" style="width: 100%; height: auto; display: block; border-radius: 15px; transition: transform 0.5s ease;" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
                 <div class="photo-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; padding: 1rem; transform: translateY(100%); transition: transform 0.3s ease;">
                     <h3 style="margin: 0; font-size: 1.1rem;">💕 Our First Note</h3>
                     <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">Where our digital love story began</p>
@@ -497,11 +494,8 @@
             </div>
 
             <!-- Matching PFP -->
-            <div class="gallery-photo glass" style="position: relative; overflow: hidden; cursor: pointer; animation: fadeInUp 0.8s ease-out 0.2s both;">
-                <img src="https://i.ibb.co.com/dswk8DcB/image-. 8.png" alt="Matching Profile Pictures"
-                     style="width: 100%; height: auto; display: block; border-radius: 15px; transition: transform 0.5s ease; object-fit: contain; background: #222;"
-                     onclick="openPhotoModal(this.src, '👫 Matching PFPs - Two hearts, one aesthetic')"
-                     onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+            <div class="gallery-photo glass" style="position: relative; overflow: hidden; cursor: pointer; animation: fadeInUp 0.8s ease-out 0.2s both;" onclick="openPhotoModal('https://i.ibb.co.com/dswk8DcB/image-. 8.png', 'Matching Profile Pictures'); createHeartParticles(event);">
+                <img src="https://i.ibb.co.com/dswk8DcB/image-. 8.png" alt="Matching Profile Pictures" style="width: 100%; height: auto; display: block; border-radius: 15px; transition: transform 0.5s ease;" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
                 <div class="photo-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; padding: 1rem; transform: translateY(100%); transition: transform 0.3s ease;">
                     <h3 style="margin: 0; font-size: 1.1rem;">👫 Matching PFPs</h3>
                     <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">Two hearts, one aesthetic</p>
@@ -509,16 +503,15 @@
             </div>
 
             <!-- Another Matching Note -->
-            <div class="gallery-photo glass" style="position: relative; overflow: hidden; cursor: pointer; animation: fadeInUp 0.8s ease-out 0.4s both;">
-                <img src="https://i.ibb.co.com/1YDwptjp/Screenshot-. .png" alt="Another Sweet Note"
-                     style="width: 100%; height: auto; display: block; border-radius: 15px; transition: transform 0.5s ease; object-fit: contain; background: #222;"
-                     onclick="openPhotoModal(this.src, '💌 Sweet Messages - Love letters in pixels')"
-                     onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+            <div class="gallery-photo glass" style="position: relative; overflow: hidden; cursor: pointer; animation: fadeInUp 0.8s ease-out 0.4s both;" onclick="openPhotoModal('https://i.ibb.co.com/1YDwptjp/Screenshot-. .png', 'Another Sweet Note'); createHeartParticles(event);">
+                <img src="https://i.ibb.co.com/1YDwptjp/Screenshot-. .png" alt="Another Sweet Note" style="width: 100%; height: auto; display: block; border-radius: 15px; transition: transform 0.5s ease;" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
                 <div class="photo-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; padding: 1rem; transform: translateY(100%); transition: transform 0.3s ease;">
                     <h3 style="margin: 0; font-size: 1.1rem;">💌 Sweet Messages</h3>
                     <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">Love letters in pixels</p>
                 </div>
             </div>
+
+
         </div>
     </section>
 
@@ -692,6 +685,98 @@
         Your browser does not support the audio element.
     </audio>
 
+    <!-- Daily Love Garden Section -->
+    <section class="daily-garden-section" style="padding: 5rem 2rem; background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1)); position: relative; overflow: hidden;">
+        <div class="garden-header" style="text-align: center; margin-bottom: 3rem;">
+            <h2 class="garden-title section-title">🌸 Your Daily Love Garden 🌸</h2>
+            <p class="garden-subtitle" style="color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; margin-bottom: 2rem;">Click 5 times on today's seed to grow your daily flower and receive a love quote!</p>
+            <div class="garden-stats" style="display: flex; justify-content: center; gap: 2rem; color: white; font-weight: 600;">
+                <span>Today's Clicks: <span id="todayClicks" style="color: #3b82f6;">0</span>/5</span>
+                <span>Garden Flowers: <span id="totalFlowers" style="color: #10b981;">0</span></span>
+            </div>
+        </div>
+        
+        <div class="garden-ground" style="max-width: 1000px; margin: 0 auto; position: relative; min-height: 400px;">
+            <!-- Sky background -->
+            <div class="garden-sky" style="position: absolute; top: 0; left: 0; right: 0; height: 200px; background: linear-gradient(to bottom, rgba(135, 206, 235, 0.3), rgba(255, 255, 255, 0.1)); border-radius: 20px 20px 0 0;"></div>
+            
+            <!-- Daily seed/plant area -->
+            <div class="daily-plant-area" style="display: flex; justify-content: center; align-items: center; height: 300px; position: relative; z-index: 2;">
+                <div class="plant-pot glass" id="dailyPlant" onclick="clickPlant()" style="width: 120px; height: 150px; position: relative; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 1rem;">
+                    <div class="pot-base" style="width: 100px; height: 60px; background: linear-gradient(135deg, rgba(139, 69, 19, 0.8), rgba(160, 82, 45, 0.6)); border-radius: 0 0 50px 50px; position: absolute; bottom: 0;"></div>
+                    <div class="plant-content" id="plantContent" style="position: relative; z-index: 1; font-size: 2rem; margin-bottom: 1rem; transition: all 0.5s ease;">
+                        <div class="seed">🌱</div>
+                    </div>
+                    <div class="click-indicator" id="clickIndicator" style="position: absolute; bottom: -30px; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; animation: pulse 2s infinite;">Click me!</div>
+                </div>
+            </div>
+
+            <!-- Garden bed for grown flowers -->
+            <div class="flower-garden" id="flowerGarden" style="position: absolute; bottom: 0; left: 0; right: 0; height: 100px;">
+                <div class="garden-soil" style="width: 100%; height: 60px; background: linear-gradient(135deg, rgba(101, 67, 33, 0.8), rgba(139, 69, 19, 0.6)); border-radius: 20px; position: relative;">
+                    <div style="position: absolute; top: -10px; left: 0; right: 0; height: 20px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.6), rgba(22, 163, 74, 0.4)); border-radius: 20px 20px 0 0;"></div>
+                </div>
+            </div>
+
+            <!-- Love quote display -->
+            <div class="love-quote-display glass" id="loveQuoteDisplay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 400px; padding: 2rem; text-align: center; opacity: 0; transition: all 0.5s ease; pointer-events: none;">
+                <div class="quote-content" id="quoteContent" style="color: white; font-style: italic; font-size: 1.1rem;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Daily Notes Section -->
+    <section class="daily-notes-section" style="padding: 5rem 2rem; background: rgba(0, 0, 0, 0.4);">
+        <h2 class="section-title">📜 Daily Love Chronicles 📜</h2>
+        <div class="notes-container" style="max-width: 900px; margin: 0 auto; display: grid; gap: 2rem;">
+            
+            <!-- Knight's Apology Note -->
+            <div class="daily-note glass" style="padding: 2.5rem; position: relative; transform: rotate(-1deg); transition: all 0.5s ease;" onclick="createHeartParticles(event)">
+                <div class="note-header" style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                    <div style="font-size: 2rem; margin-right: 1rem;">⚔️</div>
+                    <div>
+                        <h3 style="color: white; margin: 0; font-size: 1.3rem;">A Knight's Humble Apology</h3>
+                        <p style="color: rgba(255, 255, 255, 0.6); margin: 0; font-size: 0.9rem;">From thy devoted knight</p>
+                    </div>
+                </div>
+                <div class="note-content" style="color: rgba(255, 255, 255, 0.9); line-height: 1.7; font-style: italic; font-size: 1.1rem;">
+                    "Mine dearest Princess, forgive this humble knight for his transgressions. Though mine armor be strong, mine heart is tender and prone to folly. I beseech thee, let not mine errors dim the light of thy grace upon me. For without thy forgiveness, I am but a knight without purpose, a sword without a cause. Grant me thy mercy, and I shall prove worthy of thy love anew."
+                </div>
+                <div class="note-signature" style="text-align: right; margin-top: 1.5rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">
+                    - Thy Repentant Knight 🛡️
+                </div>
+            </div>
+
+            <!-- Princess's Response Note -->
+            <div class="daily-note glass" style="padding: 2.5rem; position: relative; transform: rotate(1deg); transition: all 0.5s ease;" onclick="createHeartParticles(event)">
+                <div class="note-header" style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                    <div style="font-size: 2rem; margin-right: 1rem;">👸</div>
+                    <div>
+                        <h3 style="color: white; margin: 0; font-size: 1.3rem;">The Princess's Gentle Forgiveness</h3>
+                        <p style="color: rgba(255, 255, 255, 0.6); margin: 0; font-size: 0.9rem;">From thy loving princess</p>
+                    </div>
+                </div>
+                <div class="note-content" style="color: rgba(255, 255, 255, 0.9); line-height: 1.7; font-style: italic; font-size: 1.1rem;">
+                    "Sweet Knight of mine heart, thy words touch the very depths of mine soul. Know that forgiveness flows from me as naturally as morning dew upon roses. For love is not the absence of mistakes, but the presence of grace in their wake. Rise, noble knight, for thou art already forgiven. Let us write new tales of joy together, for our love story is far from its end."
+                </div>
+                <div class="note-signature" style="text-align: right; margin-top: 1.5rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">
+                    - Thy Forgiving Princess 👑
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Memory Message Section -->
+    <section class="memory-message-section" style="padding: 3rem 2rem; background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(59, 130, 246, 0.2)); text-align: center;">
+        <div class="memory-message glass" style="max-width: 600px; margin: 0 auto; padding: 2rem; position: relative;">
+            <div style="font-size: 2rem; margin-bottom: 1rem;">💫</div>
+            <p style="color: white; font-size: 1.3rem; font-weight: 600; letter-spacing: 1px; text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);">
+                "IF YOU REMEMBER ME, COME TO THIS PAGE"
+            </p>
+            <div style="margin-top: 1rem; font-size: 1.5rem;">✨💖✨</div>
+        </div>
+    </section>
+
     <!-- Footer Section -->
     <footer style="background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(20px); padding: 3rem 2rem 2rem; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
         <div style="max-width: 1200px; margin: 0 auto;">
@@ -858,6 +943,166 @@
             }
         });
 
+        // Daily Garden Functionality
+        let todayClicks = parseInt(localStorage.getItem('todayClicks') || '0');
+        let totalFlowers = parseInt(localStorage.getItem('totalFlowers') || '0');
+        let lastClickDate = localStorage.getItem('lastClickDate');
+        let todayDate = new Date().toDateString();
+
+        // Reset clicks if it's a new day
+        if (lastClickDate !== todayDate) {
+            todayClicks = 0;
+            localStorage.setItem('todayClicks', '0');
+            localStorage.setItem('lastClickDate', todayDate);
+        }
+
+        // Update display
+        document.getElementById('todayClicks').textContent = todayClicks;
+        document.getElementById('totalFlowers').textContent = totalFlowers;
+
+        // Love quotes for the garden
+        const loveQuotes = [
+            "🌹 'In thy eyes, I see the garden of my dreams blooming eternal.' 🌹",
+            "💖 'Each click of thy heart grows a flower in the garden of our love.' 💖",
+            "🌸 'Like flowers need sunshine, my soul needs thy love to flourish.' 🌸",
+            "🌺 'In the garden of time, our love is the most beautiful flower.' 🌺",
+            "🌻 'Every moment with thee plants seeds of joy in my heart.' 🌻"
+        ];
+
+        // Plant growth stages
+        const plantStages = ['🌱', '🌿', '🌾', '🌸', '🌺'];
+
+        function clickPlant() {
+            if (todayClicks >= 5) return;
+            
+            todayClicks++;
+            localStorage.setItem('todayClicks', todayClicks.toString());
+            document.getElementById('todayClicks').textContent = todayClicks;
+            
+            // Update plant appearance
+            const plantContent = document.getElementById('plantContent');
+            const clickIndicator = document.getElementById('clickIndicator');
+            
+            if (todayClicks <= 5) {
+                plantContent.innerHTML = `<div class="seed">${plantStages[todayClicks - 1]}</div>`;
+                
+                // Add growth animation
+                plantContent.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    plantContent.style.transform = 'scale(1)';
+                }, 300);
+                
+                // Create heart particles
+                createHeartParticles(event);
+            }
+            
+            if (todayClicks === 5) {
+                // Plant fully grown - show quote and add to garden
+                setTimeout(() => {
+                    showLoveQuote();
+                    addFlowerToGarden();
+                    clickIndicator.textContent = 'Fully grown! 🌺';
+                    clickIndicator.style.color = '#10b981';
+                }, 500);
+                
+                totalFlowers++;
+                localStorage.setItem('totalFlowers', totalFlowers.toString());
+                document.getElementById('totalFlowers').textContent = totalFlowers;
+            } else {
+                clickIndicator.textContent = `${5 - todayClicks} more clicks!`;
+            }
+        }
+
+        function showLoveQuote() {
+            const quoteDisplay = document.getElementById('loveQuoteDisplay');
+            const quoteContent = document.getElementById('quoteContent');
+            
+            const randomQuote = loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
+            quoteContent.textContent = randomQuote;
+            
+            quoteDisplay.style.opacity = '1';
+            quoteDisplay.style.pointerEvents = 'auto';
+            
+            setTimeout(() => {
+                quoteDisplay.style.opacity = '0';
+                quoteDisplay.style.pointerEvents = 'none';
+            }, 5000);
+        }
+
+        function addFlowerToGarden() {
+            const flowerGarden = document.getElementById('flowerGarden');
+            const flowers = ['🌸', '🌺', '🌻', '🌷', '🌹', '💐'];
+            const randomFlower = flowers[Math.floor(Math.random() * flowers.length)];
+            
+            const flowerElement = document.createElement('div');
+            flowerElement.innerHTML = randomFlower;
+            flowerElement.style.cssText = `
+                position: absolute;
+                font-size: 1.5rem;
+                bottom: 60px;
+                left: ${Math.random() * 80 + 10}%;
+                animation: growFlower 1s ease-out;
+                cursor: pointer;
+            `;
+            
+            flowerElement.onclick = (e) => createHeartParticles(e);
+            flowerGarden.appendChild(flowerElement);
+        }
+
+        // Initialize plant state
+        if (todayClicks > 0) {
+            const plantContent = document.getElementById('plantContent');
+            const clickIndicator = document.getElementById('clickIndicator');
+            
+            if (todayClicks >= 5) {
+                plantContent.innerHTML = `<div class="seed">${plantStages[4]}</div>`;
+                clickIndicator.textContent = 'Fully grown! 🌺';
+                clickIndicator.style.color = '#10b981';
+            } else {
+                plantContent.innerHTML = `<div class="seed">${plantStages[todayClicks - 1]}</div>`;
+                clickIndicator.textContent = `${5 - todayClicks} more clicks!`;
+            }
+        }
+
+        // Load existing flowers
+        for (let i = 0; i < totalFlowers; i++) {
+            setTimeout(() => addFlowerToGarden(), i * 200);
+        }
+
+        // Daily notes hover effects
+        document.querySelectorAll('.daily-note').forEach(note => {
+            note.addEventListener('mouseenter', () => {
+                note.style.transform = 'rotate(0deg) scale(1.02)';
+                note.style.boxShadow = '0 20px 40px rgba(59, 130, 246, 0.3)';
+            });
+            
+            note.addEventListener('mouseleave', () => {
+                const rotation = note.classList.contains('knight-note') ? '-1deg' : '1deg';
+                note.style.transform = `rotate(${rotation}) scale(1)`;
+                note.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+            });
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { opacity: 0.7; transform: scale(1); }
+                50% { opacity: 1; transform: scale(1.05); }
+            }
+            
+            @keyframes growFlower {
+                0% { transform: scale(0) translateY(20px); opacity: 0; }
+                100% { transform: scale(1) translateY(0); opacity: 1; }
+            }
+            
+            .plant-pot:hover {
+                transform: scale(1.05);
+                box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+            }
+        `;
+        document.head.appendChild(style);
+
         // Breathing background animation
         let breathePhase = 0;
         setInterval(() => {
@@ -866,5 +1111,5 @@
             document.body.style.filter = `brightness(${intensity})`;
         }, 50);
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'987e3999a5a57e63',t:'MTc1OTM0NTQ1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9896dfeee7087e60',t:'MTc1OTYwMzkyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
