@@ -773,7 +773,28 @@
             <p style="color: white; font-size: 1.3rem; font-weight: 600; letter-spacing: 1px; text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);">
                 "IF YOU REMEMBER ME, COME TO THIS PAGE"
             </p>
-            <div style="margin-top: 1rem; font-size: 1.5rem;">✨💖✨</div>
+            <!-- New Day 1 Message -->
+            <div style="margin:2.5rem 0 1.5rem 0;">
+                <h3 style="color:#ffb6e6; margin-bottom:0.7rem;">Day 1 Without You</h3>
+                <div style="color:#fff; font-size:1.1rem; line-height:1.7; background:rgba(255,255,255,0.07); border-radius:12px; padding:1.2rem 1rem; margin-bottom:1.2rem;">
+                    If you’re reading this, it means you remembered my promise to meet you here.<br>
+                    I love you so much. I’m going through my medical routine right now, and Insha’Allah I’ll be well soon.<br>
+                    We’ll be okay again after some days if I survive.<br>
+                    Till then, please eat properly, rest well, pray, and sleep on time.<br>
+                    Tata wifey~ Take care of yourself.<br>
+                    I love youuu ❤️<br>
+                    Allah Hafez.
+                </div>
+                <div style="color:#ffb6e6; font-size:1rem; margin-bottom:1.2rem;">
+                    <b>Note:</b> If you saw this, please click the <span style="color:#ff4f8b;">Love</span> button below so I know you were here!
+                </div>
+                <!-- Love Button -->
+                <button id="loveBtn" style="background:linear-gradient(90deg,#ff4f8b,#ffb6e6);color:white;font-size:1.2rem;font-weight:700;padding:0.7rem 2.2rem;border:none;border-radius:30px;box-shadow:0 4px 16px #ff4f8b44;cursor:pointer;transition:transform 0.1s;" onclick="handleLoveClick()">
+                    <span id="loveIcon" style="font-size:1.5rem;vertical-align:middle;">&#10084;&#65039;</span>
+                    <span id="loveCount" style="margin-left:0.7rem;font-size:1.1rem;vertical-align:middle;">0</span>
+                </button>
+                <div id="loveStatus" style="margin-top:0.7rem;color:#fff;font-size:1rem;min-height:1.2em;"></div>
+            </div>
         </div>
     </section>
 
@@ -1110,6 +1131,97 @@
             const intensity = Math.sin(breathePhase) * 0.1 + 0.9;
             document.body.style.filter = `brightness(${intensity})`;
         }, 50);
+
+
+        (function() {
+            // 1. Add your Firebase config here:
+            const firebaseConfig = {
+    apiKey: "AIzaSyBPZWJ3CDagXCSfoqv0XAzIrD8rfskoFiQ",
+    authDomain: "couple-portfolio.firebaseapp.com",
+    databaseURL: "https://couple-portfolio-default-rtdb.firebaseio.com/",
+    projectId: "couple-portfolio",
+    storageBucket: "couple-portfolio.firebasestorage.app",
+    messagingSenderId: "1014232071173",
+    appId: "1:1014232071173:web:545e5926f4af638687f06c",
+    measurementId: "G-W5KJFT71VH"
+};
+
+            // 2. Load Firebase SDK if not already loaded
+            function loadFirebase(callback) {
+                if (window.firebase && window.firebase.database) {
+                    callback();
+                    return;
+                }
+                const script1 = document.createElement('script');
+                script1.src = "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
+                script1.onload = () => {
+                    const script2 = document.createElement('script');
+                    script2.src = "https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js";
+                    script2.onload = callback;
+                    document.head.appendChild(script2);
+                };
+                document.head.appendChild(script1);
+            }
+
+            // 3. Main logic
+            function setupLoveBtn() {
+                firebase.initializeApp(firebaseConfig);
+                const db = firebase.database();
+                const loveRef = db.ref('loveBtn/clicked');
+                const loveBtn = document.getElementById('loveBtn');
+                const loveCountSpan = document.getElementById('loveCount');
+                const loveStatus = document.getElementById('loveStatus');
+                const loveIcon = document.getElementById('loveIcon');
+
+                // Use localStorage to prevent double-click from same browser
+                let hasClicked = localStorage.getItem('loveBtnClicked') === 'yes';
+
+                // Update UI if already clicked
+                if (hasClicked) {
+                    loveBtn.style.background = "linear-gradient(90deg,#10b981,#3b82f6)";
+                    loveIcon.innerHTML = "&#10084;&#65039;";
+                    loveStatus.textContent = "You already sent your love!";
+                }
+
+                // Listen for count changes
+                loveRef.on('value', snap => {
+                    const count = snap.val() || 0;
+                    loveCountSpan.textContent = count;
+                });
+
+                // Handle click
+                window.handleLoveClick = function() {
+                    if (hasClicked) {
+                        loveStatus.textContent = "You already sent your love!";
+                        return;
+                    }
+                    loveBtn.disabled = true;
+                    loveBtn.style.transform = "scale(1.1)";
+                    setTimeout(() => loveBtn.style.transform = "scale(1)", 150);
+
+                    // Transaction to increment count
+                    loveRef.transaction(current => (current || 0) + 1)
+                        .then(() => {
+                            loveBtn.style.background = "linear-gradient(90deg,#10b981,#3b82f6)";
+                            loveStatus.textContent = "Love sent! 💖";
+                            loveIcon.innerHTML = "&#10084;&#65039;";
+                            localStorage.setItem('loveBtnClicked', 'yes');
+                            hasClicked = true;
+                        })
+                        .catch(() => {
+                            loveStatus.textContent = "Error sending love. Try again!";
+                            loveBtn.disabled = false;
+                        });
+                };
+            }
+
+            // 4. Run setup after DOM ready
+            document.addEventListener('DOMContentLoaded', () => {
+                if (document.getElementById('loveBtn')) {
+                    loadFirebase(setupLoveBtn);
+                }
+            });
+        })();
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9896dfeee7087e60',t:'MTc1OTYwMzkyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
